@@ -8,6 +8,8 @@ from trdg.utils import load_dict, load_fonts
 from arabic_reshaper import ArabicReshaper
 from bidi.algorithm import get_display
 
+import random
+
 
 class GeneratorFromStrings:
     """Generator that uses a given list of strings"""
@@ -23,13 +25,13 @@ class GeneratorFromStrings:
         random_skew: bool = False,
         blur: int = 0,
         random_blur: bool = False,
-        background_type: int = 0,
+        background_type: list[int] = [0],
         distorsion_type: int = 0,
         distorsion_orientation: int = 0,
         is_handwritten: bool = False,
         width: int = -1,
         alignment: int = 1,
-        text_color: str = "#282828",
+        text_color: list[str] = ["#282828"],
         orientation: int = 0,
         space_width: float = 1.0,
         character_spacing: int = 0,
@@ -40,11 +42,12 @@ class GeneratorFromStrings:
         image_dir: str = os.path.join(
             "..", os.path.split(os.path.realpath(__file__))[0], "images"
         ),
-        stroke_width: int = 0,
+        stroke_width: list[int] = [0],
         stroke_fill: str = "#282828",
         image_mode: str = "RGB",
         output_bboxes: int = 0,
         rtl: bool = False,
+        seed: int = 0
     ):
         self.count = count
         self.strings = strings
@@ -89,6 +92,7 @@ class GeneratorFromStrings:
         self.stroke_width = stroke_width
         self.stroke_fill = stroke_fill
         self.image_mode = image_mode
+        random.seed(seed)
 
     def __iter__(self):
         return self
@@ -104,7 +108,7 @@ class GeneratorFromStrings:
             FakeTextDataGenerator.generate(
                 self.generated_count,
                 self.strings[(self.generated_count - 1) % len(self.strings)],
-                self.fonts[(self.generated_count - 1) % len(self.fonts)],
+                random.choice(self.fonts),
                 None,
                 self.size,
                 None,
@@ -112,14 +116,14 @@ class GeneratorFromStrings:
                 self.random_skew,
                 self.blur,
                 self.random_blur,
-                self.background_type,
+                random.choice(self.background_type),
                 self.distorsion_type,
                 self.distorsion_orientation,
                 self.is_handwritten,
                 0,
                 self.width,
                 self.alignment,
-                self.text_color,
+                random.choice(self.text_color),
                 self.orientation,
                 self.space_width,
                 self.character_spacing,
@@ -128,7 +132,7 @@ class GeneratorFromStrings:
                 self.output_mask,
                 self.word_split,
                 self.image_dir,
-                self.stroke_width,
+                random.choice(self.stroke_width),
                 self.stroke_fill,
                 self.image_mode,
                 self.output_bboxes,

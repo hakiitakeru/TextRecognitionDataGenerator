@@ -6,11 +6,6 @@ from PIL import Image, ImageFilter, ImageStat
 from trdg import computer_text_generator, background_generator, distorsion_generator
 from trdg.utils import mask_to_bboxes, make_filename_valid
 
-try:
-    from trdg import handwritten_text_generator
-except ImportError as e:
-    print("Missing modules for handwritten text generation.")
-
 
 class FakeTextDataGenerator(object):
     @classmethod
