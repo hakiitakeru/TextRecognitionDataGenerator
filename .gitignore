@@ -101,3 +101,8 @@ ENV/
 .mypy_cache/
 
 .vscode/*
+
+# dataset
+dataset/train/*
+dataset/val/*
+dataset/test/*
